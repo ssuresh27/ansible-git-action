@@ -20,7 +20,7 @@ jobs:
         uses: dawidd6/action-ansible-playbook@v2
         with:
             # Required, playbook filepath
-            playbook: copy-file.yml
+            playbook: copy-readme-file.yml
             key: ${{secrets.SSH_KEY}}
             options: |
                 -u ${{secrets.ANSIBLE_DEPLOY_USER}}
