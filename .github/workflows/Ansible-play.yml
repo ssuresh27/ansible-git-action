@@ -31,4 +31,4 @@ jobs:
       - name: Run ansible script
         shell: bash 
         run: |
-          ansible-playbook --private-key /home/runner/.ssh/id_rsa -u ${{secrets.ANSIBLE_DEPLOY_USER}} -i hosts.inv copy-file.yml -v
+          ansible-playbook --private-key /home/runner/.ssh/id_rsa -u ${{secrets.ANSIBLE_DEPLOY_USER}} -i hosts.inv copy-file.yml
