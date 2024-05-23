@@ -1,0 +1,34 @@
+
+name: Ansible-play
+
+# Controls when the workflow will run
+on:
+    # Event/Action Types
+    pull_request:
+      types: 
+        - opened
+    # Manual execution
+    workflow_dispatch:  
+  
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  run-playbooks:
+    runs-on: ubuntu-latest
+    steps: 
+      - uses: actions/checkout@v4
+      - name: print_ansible_config
+        shell: bash
+        run: |
+            ansible --version
+      - name: Setup SSH 
+        shell: bash
+        run: |
+         eval `ssh-agent -s`
+         mkdir -p /home/runner/.ssh/
+         touch /home/runner/.ssh/id_rsa
+         echo -e "${{secrets.SSH_KEY}}" > /home/runner/.ssh/id_rsa
+         chmod 700 /home/runner/.ssh/id_rsa
+      - name: Run ansible script
+        shell: bash 
+        run: |
+          ansible-playbook --private-key /home/runner/.ssh/id_rsa -u ${{secrets.ANSIBLE_DEPLOY_USER}} -i hosts.inv copy-file.yml -v

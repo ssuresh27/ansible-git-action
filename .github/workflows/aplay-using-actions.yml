@@ -1,0 +1,27 @@
+
+name: APlay-using-actions
+
+# Controls when the workflow will run
+on:
+    # Event/Action Types
+    pull_request:
+      types: 
+        - opened
+    # Manual execution
+    workflow_dispatch:  
+  
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  run-playbooks:
+    runs-on: ubuntu-latest
+    steps: 
+      - uses: actions/checkout@v4
+      - name: Run playbook
+        uses: dawidd6/action-ansible-playbook@v2
+        with:
+            # Required, playbook filepath
+            playbook: copy-file.yml
+            key: ${{secrets.SSH_KEY}}
+            options: |
+                -u ${{secrets.ANSIBLE_DEPLOY_USER}}
+                --inventory hosts.inv
