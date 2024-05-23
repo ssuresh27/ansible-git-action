@@ -1,0 +1,10 @@
+---
+- name: hello world
+  hosts: all
+  
+  tasks:
+  - name: Copy file demo.txt to remote
+    ansible.builtin.copy:
+      src: demo.yml
+      dest: /tmp/demo.yml
+      remote_src: false
